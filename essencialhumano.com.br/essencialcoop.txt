@@ -1,0 +1,28 @@
+essencialcoop
+admin
+@Eas+f35H4d+df
+
+
+Dados do aplicativo instalado
+O aplicativo foi instalado com sucesso! Segue abaixo as informações de acesso. Copie e armazene estas informações em um local seguro. Você também receberá um e-mail com estas informações.
+
+Acesso
+
+URL principal:	https://essencialcoop.essencialhumano.com.br 
+URL alternativo:	
+Administrador
+
+URL:	https://essencialcoop.essencialhumano.com.br/wp-admin/ 
+Login:	admin
+Senha:	@Eas+f35H4d+df
+E-mail:	flavio@webcriacoes.com.br
+Banco de Dados
+
+Nome:	dfp1mr
+Usuário:	dfp1mr
+Senha:	4Y1_!Kd-5X&CeVHA
+Host:	localhost
+
+
+
+UPDATE wp_options SET option_value = replace(option_value, 'oldurl.com', 'newurl.com') WHERE option_name = 'home' OR option_name = 'siteurl'; UPDATE wp_posts SET guid = replace(guid, 'oldurl.com','newurl.com'); UPDATE wp_posts SET post_content = replace(post_content, 'oldurl.com', 'newurl.com'); UPDATE wp_postmeta SET meta_value = replace(meta_value,'oldurl.com','newurl.com');

@@ -1,0 +1,10 @@
+<files config.php>
+order allow,deny
+deny from all
+</files>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+Options +FollowSymLinks
+Options All -Indexes
+</IfModule>

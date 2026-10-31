@@ -1,0 +1,2 @@
+<?php $host = "localhost";$usuario = "****";$senha = "****";$banco="****";
+$conn=mysqli_connect("$host", "$usuario", "$senha", "$banco") or die("<b>Um erro ocorreu no acesso ao site</b>.\n<br /><br />Ocorreu um erro inesperado, tente novamente mais tarde.<br /><br />"); ?>

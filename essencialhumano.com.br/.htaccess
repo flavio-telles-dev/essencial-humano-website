@@ -1,0 +1,140 @@
+<FilesMatch "^([^\.]+)$">
+ForceType application/x-httpd-php
+</FilesMatch>
+
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|svg|webp|js|css|swf)$">
+Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>
+
+<FilesMatch "\.(xml|txt)$">
+Header set Cache-Control "max-age=172800, public, must-revalidate"
+</FilesMatch>
+
+<FilesMatch "\.(html|htm)$">
+Header set Cache-Control "max-age=7200, must-revalidate"
+</FilesMatch>
+
+<files ~ "^.*\.([Hh][Tt][Aa])">
+order allow,deny
+deny from all
+satisfy all
+</files>
+
+<files include.php>
+order allow,deny
+deny from all
+</files>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# libwww-perl
+RewriteCond %{HTTP_USER_AGENT} libwww-perl.* 
+RewriteRule ^(.*)$ - [F,L]
+
+RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=http:// [OR]
+RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=(\.\.//?)+ [OR]
+RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=/([a-z0-9_.]//?)+ [NC,OR]
+RewriteCond %{QUERY_STRING} \=PHP[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12} [NC,OR]
+RewriteCond %{QUERY_STRING} (\.\./|\.\.) [OR]
+RewriteCond %{QUERY_STRING} ftp\: [NC,OR]
+RewriteCond %{QUERY_STRING} http\: [NC,OR]
+RewriteCond %{QUERY_STRING} https\: [NC,OR]
+RewriteCond %{QUERY_STRING} \=\|w\| [NC,OR]
+RewriteCond %{QUERY_STRING} ^(.*)/self/(.*)$ [NC,OR]
+RewriteCond %{QUERY_STRING} ^(.*)cPath=http://(.*)$ [NC,OR]
+RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} (\<|%3C).*iframe.*(\>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} (<|%3C)([^i]*i)+frame.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} base64_encode.*\(.*\) [NC,OR]
+RewriteCond %{QUERY_STRING} base64_(en|de)code[^(]*\([^)]*\) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} ^.*(\[|\]|\(|\)|<|>).* [NC,OR]
+RewriteCond %{QUERY_STRING} (NULL|OUTFILE|LOAD_FILE) [OR]
+RewriteCond %{QUERY_STRING} (\./|\../|\.../)+(motd|etc|bin) [NC,OR]
+RewriteCond %{QUERY_STRING} (localhost|loopback|127\.0\.0\.1) [NC,OR]
+RewriteCond %{QUERY_STRING} (<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC,OR]
+RewriteCond %{QUERY_STRING} concat[^\(]*\( [NC,OR]
+RewriteCond %{QUERY_STRING} union([^s]*s)+elect [NC,OR]
+RewriteCond %{QUERY_STRING} union([^a]*a)+ll([^s]*s)+elect [NC,OR]
+RewriteCond %{QUERY_STRING} (;|<|>|'|"|\)|%0A|%0D|%22|%27|%3C|%3E|%00).*(/\*|union|select|insert|drop|delete|update|cast|create|char|convert|alter|declare|order|script|set|md5|benchmark|encode) [NC,OR]
+RewriteCond %{QUERY_STRING} (sp_executesql) [NC]
+RewriteRule ^(.*)$ - [F,L]
+
+Options -Indexes
+Options +FollowSymLinks
+
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule (.*) https://www.essencialhumano.com.br/$1 [R=301,L]
+
+errordocument 404 /erros/404.html
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^/?$ /index.php [NC,L]
+RewriteRule ^gestao-das-emocoes-no-ambiente-corporativo/?$ /gestao-das-emocoes-no-ambiente-corporativo.php [NC,L]
+RewriteRule ^sobrenos/?$ /sobrenos.php [NC,L]
+RewriteRule ^politica-de-privacidade/?$ /politica-de-privacidade.php [NC,L]
+RewriteRule ^equipe/?$ /equipe.php [NC,L]
+RewriteRule ^vagas/?$ /vagas.php [NC,L]
+RewriteRule ^clientes/?$ /clientes.php [NC,L]
+RewriteRule ^servicos/?$ /servicos.php [NC,L]
+RewriteRule ^servicos/([a-z0-9-]+)/?$ /servicos-detalhes.php?nome_cod=$1 [NC,L]
+RewriteRule ^contato/?$ /contato.php [NC,L]
+RewriteRule ^enviar-cv/?$ /enviar-cv.php [NC,L]
+RewriteRule ^enviar-cv/([a-z0-9-]+)/?$ /enviar-cv/?erropag=$1 [NC,L]
+RewriteRule ^cadastrocurriculo/?$ /cadastrocurriculo.php [NC,L]
+RewriteRule ^editacurriculo/?$ /editacurriculo.php [NC,L]
+RewriteRule ^novasenha-curriculo/?$ /novasenha-curriculo.php [NC,L]
+RewriteRule ^novasenha-curriculo/([0-9-]+)/([a-z0-9-]+)/?$ /novasenha-curriculo/?id_senha=$1&key_senha=$2 [NC,L]
+RewriteRule ^visualiza-curriculo/?$ /visualiza-curriculo.php [NC,L]
+RewriteRule ^visualiza-curriculo/([a-z0-9-]+)/?$ /visualiza-curriculo/?cpf_senha=$1 [NC,L]
+RewriteRule ^recuperar-senha/?$ /recuperar-senha.php [NC,L]
+RewriteRule ^novasenha-curriculo/?$ /novasenha-curriculo.php [NC,L]
+RewriteRule ^novasenha-curriculo/([0-9-]+)/([a-z0-9-]+)/?$ /novasenha-curriculo/?id_senha=$1&key_senha=$2 [NC,L]
+RewriteRule ^blog/?$ /blog.php [NC,L]
+RewriteRule ^blog/([0-9-]+)/?$ /blog/?pagina=$1 [NC,L]
+RewriteRule ^blog/([0-9-]+)/([a-z0-9-]+)/?$ /blog/?pagina=$1&c=$2 [NC,L]
+RewriteRule ^blog/([0-9-]+)/([a-z0-9-]+)/?$ /blog/?pagina=$1&p=$3 [NC,L]
+RewriteRule ^blog/([0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ /blog/?pagina=$1&c=$2&p=$3 [NC,L]
+RewriteRule ^blog/([a-z0-9-]+)/?$ /blog-detalhes.php?nome_cod=$1 [NC,L]
+
+RewriteRule ^solicitacao-de-vagas/?$ /solicitacao-de-vagas.php [NC,L]
+RewriteRule ^alteracao-de-vagas/?$ /alteracao-de-vagas.php [NC,L]
+</IfModule>
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php7_module>
+   php_flag display_errors Off
+   php_value max_execution_time 180
+   php_value max_input_time 180
+   php_value max_input_vars 5000
+   php_value memory_limit 560M
+   php_value post_max_size 20M
+   php_value upload_max_filesize 20M
+   php_flag zlib.output_compression Off
+</IfModule>
+<IfModule lsapi_module>
+   php_flag display_errors Off
+   php_value max_execution_time 180
+   php_value max_input_time 180
+   php_value max_input_vars 5000
+   php_value memory_limit 560M
+   php_value post_max_size 20M
+   php_value upload_max_filesize 20M
+   php_flag zlib.output_compression Off
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php74” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php74___lsphp .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
